@@ -1,4 +1,4 @@
-package com.anobis.scraper;
+package com.anobis.scraper.runner;
 
 import java.util.concurrent.*;
 

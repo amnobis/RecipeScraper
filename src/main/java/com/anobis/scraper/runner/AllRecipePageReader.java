@@ -1,5 +1,7 @@
-package com.anobis.scraper;
+package com.anobis.scraper.runner;
 
+import com.anobis.scraper.listener.IStatusListener;
+import com.anobis.scraper.data.Recipe;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -11,8 +13,8 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import com.anobis.scraper.Recipe.Nutrition;
-import com.anobis.scraper.Recipe.Grade;
+import com.anobis.scraper.data.Recipe.Nutrition;
+import com.anobis.scraper.data.Recipe.Grade;
 
 /**
  * @author anobis <austin.nobis@amd.com>

@@ -1,4 +1,6 @@
-package com.anobis.scraper;
+package com.anobis.scraper.listener;
+
+import com.anobis.scraper.data.Recipe;
 
 /**
  * @author anobis <austin.nobis@amd.com>

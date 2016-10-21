@@ -1,5 +1,10 @@
 package com.anobis.scraper;
 
+import com.anobis.scraper.listener.IStatusListener;
+import com.anobis.scraper.listener.RecipeListener;
+import com.anobis.scraper.runner.AllRecipePageReader;
+import com.anobis.scraper.runner.PageReader;
+import com.anobis.scraper.runner.PageRunner;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -7,7 +12,6 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import static java.lang.Thread.sleep;
@@ -31,7 +35,7 @@ public class scrape {
         PageRunner runner = new PageRunner();
         runner.start(recipeQueue);
 
-        for (int i = 1; i < 100; ++i) {
+        for (int i = 1; i < 5; ++i) {
             try {
                 Document doc = Jsoup.connect(MAIN_PAGE + i).get();
                 Elements recipeElems = doc.body().getElementsByClass("favorite");

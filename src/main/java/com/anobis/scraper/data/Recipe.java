@@ -1,4 +1,4 @@
-package com.anobis.scraper;
+package com.anobis.scraper.data;
 
 import java.nio.ByteBuffer;
 import java.util.Collections;

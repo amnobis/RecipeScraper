@@ -1,6 +1,6 @@
-package com.anobis.scraper;
+package com.anobis.scraper.listener;
 
-import com.anobis.scraper.IStatusListener;
+import com.anobis.scraper.data.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
