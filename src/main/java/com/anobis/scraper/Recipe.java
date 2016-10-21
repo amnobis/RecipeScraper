@@ -1,4 +1,4 @@
-import com.sun.org.apache.regexp.internal.RE;
+package com.anobis.scraper;
 
 import java.nio.ByteBuffer;
 import java.util.Collections;
