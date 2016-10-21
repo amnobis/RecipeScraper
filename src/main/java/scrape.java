@@ -15,22 +15,43 @@ public class scrape {
     public static void main(String[] args) {
         try {
             List<Recipe> recipes = new ArrayList<>();
-            for (int i = 1; i < 5; ++i) {
+            for (int i = 2; i < 3; ++i) {
+                double start = System.currentTimeMillis();
                 Document doc = Jsoup.connect("http://allrecipes.com/recipes/80/main-dish/?page=" + i).get();
+                System.out.println("Page Time: " + (start - System.currentTimeMillis()));
                 Elements recipeElems = doc.body().getElementsByClass("favorite");
 
                 for (Element recipeElem : recipeElems) {
                     String id = recipeElem.attr("data-id");
 
                     System.out.println(id);
+
+                    start = System.currentTimeMillis();
                     Document docu = Jsoup.connect("http://allrecipes.com/recipe/" + id).get();
+                    System.out.println("Page Time: " + (start - System.currentTimeMillis()));
                     Elements nutrientsElems = docu.getElementsByClass("nutrientLine__item--amount");
                     Elements ingredientsElems = docu.getElementsByClass("recipe-ingred_txt");
+                    Elements ratingsElems = docu.getElementsByClass("recipe-summary__stars").first().getElementsByTag("meta");
+
                     List<String> ingredients = ingredientsElems
                             .stream()
                             .filter(elem -> !elem.attr("data-id").isEmpty())
                             .map(Element::text)
                             .collect(Collectors.toList());
+
+                    double rating = 0;
+                    int numReviews = 0;
+
+                    for (Element elem : ratingsElems) {
+                        switch (elem.attr("itemprop")) {
+                            case "ratingValue":
+                                rating = Double.valueOf(elem.attr("content"));
+                                break;
+                            case "reviewCount":
+                                numReviews = Integer.valueOf(elem.attr("content"));
+                                break;
+                        }
+                    }
 
                     double cals = 0;
                     double fat = 0;
@@ -75,7 +96,7 @@ public class scrape {
                             cholest,
                             sodium),
                         ingredients,
-                        new Recipe.Grade(0.0, 0),
+                        new Recipe.Grade(rating, numReviews),
                         null);
                     recipes.add(recipe);
                 }
