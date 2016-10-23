@@ -19,7 +19,7 @@ import static java.lang.Thread.sleep;
 /**
  * @author anobis
  */
-public class scrape {
+public class Scrape {
     private static final String MAIN_PAGE = "http://allrecipes.com/recipes/80/main-dish/?page=";
     private static final String RECIPE_PAGE = "http://allrecipes.com/recipe/";
 
