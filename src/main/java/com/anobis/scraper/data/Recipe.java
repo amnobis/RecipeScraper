@@ -1,5 +1,7 @@
 package com.anobis.scraper.data;
 
+import com.google.common.base.MoreObjects;
+
 import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.List;
@@ -43,7 +45,7 @@ public class Recipe {
 
     @Override
     public String toString() {
-        return com.google.common.base.Objects.toStringHelper(this)
+        return MoreObjects.toStringHelper(this)
                 .add("ingredients", ingredients)
                 .add("nutrition", nutrition)
                 .add("image", image)
@@ -67,7 +69,7 @@ public class Recipe {
 
         @Override
         public String toString() {
-            return com.google.common.base.Objects.toStringHelper(this)
+            return MoreObjects.toStringHelper(this)
                     .add("rating", rating)
                     .add("numReviews", numReviews)
                     .toString();
@@ -131,7 +133,7 @@ public class Recipe {
 
         @Override
         public String toString() {
-            return com.google.common.base.Objects.toStringHelper(this)
+            return MoreObjects.toStringHelper(this)
                     .add("calories", calories)
                     .add("fat", fat)
                     .add("carbohydrates", carbohydrates)
