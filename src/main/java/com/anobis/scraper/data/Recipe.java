@@ -14,13 +14,15 @@ import java.util.Optional;
  * the recipe
  */
 public class Recipe {
+    private final String name;
     private final List<String> ingredients;
     private final Nutrition nutrition;
     private final ByteBuffer image;
     private final Grade grade;
 
 
-    public Recipe(Nutrition nutrition, List<String> ingredients, Grade grade, ByteBuffer image) {
+    public Recipe(String name, Nutrition nutrition, List<String> ingredients, Grade grade, ByteBuffer image) {
+        this.name = Objects.requireNonNull(name);
         this.nutrition = Objects.requireNonNull(nutrition);
         this.ingredients = Objects.requireNonNull(ingredients);
         this.grade = Objects.requireNonNull(grade);

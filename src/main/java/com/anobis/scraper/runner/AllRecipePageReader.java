@@ -17,9 +17,10 @@ import com.anobis.scraper.data.Recipe.Nutrition;
 import com.anobis.scraper.data.Recipe.Grade;
 
 /**
- * @author anobis <austin.nobis@amd.com>
+ * @author anobis
  */
 public class AllRecipePageReader implements PageReader {
+    private static final String NAME_KEY = "";
     private static final String NUTRIENT_KEY = "nutrientLine__item--amount";
     private static final String INGREDIENT_KEY = "recipe-ingred_txt";
     private static final String RATINGS_KEY = "recipe-summary__stars";
@@ -43,6 +44,7 @@ public class AllRecipePageReader implements PageReader {
     public void run() {
         try {
             Document doc = getDocument(url);
+            String name = getName(doc, NAME_KEY);
             Nutrition nutrition = getNutrition(doc, NUTRIENT_KEY);
             Grade grade = getGrade(doc, RATINGS_KEY);
             List<String> ingredients = getIngredients(doc, INGREDIENT_KEY);
@@ -51,11 +53,18 @@ public class AllRecipePageReader implements PageReader {
             System.out.println("Recipe was found!");
 
             statusListeners.forEach(listener -> {
-                listener.recipeFound(new Recipe(nutrition, ingredients, grade, image));
+                listener.recipeFound(new Recipe(name, nutrition, ingredients, grade, image));
             });
         } catch (RuntimeException e) {
-            System.out.println("Unable to retrieve recipe at " + url);
+            System.out.println("Retrying recipe at URL: " + url);
+            statusListeners.forEach(listener -> {
+                listener.queryFailed(this);
+            });
         }
+    }
+
+    private static String getName(Document doc, String nameKey) {
+        return "";
     }
 
     private static ByteBuffer getImage(Document doc, String imageKey) {

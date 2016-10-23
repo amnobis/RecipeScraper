@@ -1,7 +1,7 @@
 package com.anobis.scraper.runner;
 
 /**
- * @author anobis <austin.nobis@amd.com>
+ * @author anobis
  */
 public interface PageReader extends Runnable {
     String getUrl();

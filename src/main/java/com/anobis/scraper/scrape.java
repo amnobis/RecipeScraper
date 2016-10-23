@@ -26,13 +26,13 @@ public class scrape {
 
     public static void main(String[] args) {
         List<IStatusListener> listeners = new ArrayList<>();
-        RecipeListener recipeListener = new RecipeListener();
         LinkedBlockingQueue<PageReader> recipeQueue = new LinkedBlockingQueue<>();
+        RecipeListener recipeListener = new RecipeListener(recipeQueue);
         listeners.add(recipeListener);
         PageRunner runner = new PageRunner();
         runner.start(recipeQueue);
 
-        for (int i = 1; i < 5; ++i) {
+        for (int i = 1; i < 10; ++i) {
             try {
                 Document doc = Jsoup.connect(MAIN_PAGE + i).get();
                 Elements recipeElems = doc.body().getElementsByClass("favorite");

@@ -3,7 +3,7 @@ package com.anobis.scraper.runner;
 import java.util.concurrent.*;
 
 /**
- * @author anobis <austin.nobis@amd.com>
+ * @author anobis
  */
 public class PageRunner implements IPageRunner {
     private static final PageReader POISON_PILL = new PageReader() {

@@ -3,7 +3,7 @@ package com.anobis.scraper.runner;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * @author anobis <austin.nobis@amd.com>
+ * @author anobis
  */
 public interface IPageRunner {
     void start(LinkedBlockingQueue<PageReader> queue);
