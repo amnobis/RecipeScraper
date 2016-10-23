@@ -20,24 +20,18 @@ import com.anobis.scraper.data.Recipe.Grade;
  * @author anobis <austin.nobis@amd.com>
  */
 public class AllRecipePageReader implements PageReader {
+    private static final String NUTRIENT_KEY = "nutrientLine__item--amount";
+    private static final String INGREDIENT_KEY = "recipe-ingred_txt";
+    private static final String RATINGS_KEY = "recipe-summary__stars";
+    private static final String IMAGE_KEY = "";
+
     private final String url;
     private final List<IStatusListener> statusListeners;
-    private final String nutrientKey;
-    private final String ingredientKey;
-    private final String ratingsKey;
-    private final String imageKey;
 
     public AllRecipePageReader(final String url,
-                               final List<IStatusListener> statusListeners,
-                               final String nutrientKey,
-                               final String ingredientKey,
-                               final String ratingsKey, String imageKey) {
+                               final List<IStatusListener> statusListeners) {
         this.url = url;
         this.statusListeners = statusListeners;
-        this.nutrientKey = nutrientKey;
-        this.ingredientKey = ingredientKey;
-        this.ratingsKey = ratingsKey;
-        this.imageKey = imageKey;
     }
 
     @Override
@@ -49,10 +43,10 @@ public class AllRecipePageReader implements PageReader {
     public void run() {
         try {
             Document doc = getDocument(url);
-            Nutrition nutrition = getNutrition(doc, nutrientKey);
-            Grade grade = getGrade(doc, ratingsKey);
-            List<String> ingredients = getIngredients(doc, ingredientKey);
-            ByteBuffer image = getImage(doc, imageKey);
+            Nutrition nutrition = getNutrition(doc, NUTRIENT_KEY);
+            Grade grade = getGrade(doc, RATINGS_KEY);
+            List<String> ingredients = getIngredients(doc, INGREDIENT_KEY);
+            ByteBuffer image = getImage(doc, IMAGE_KEY);
 
             System.out.println("Recipe was found!");
 

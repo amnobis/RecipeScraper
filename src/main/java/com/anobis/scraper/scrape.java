@@ -22,10 +22,7 @@ import static java.lang.Thread.sleep;
 public class scrape {
     private static final String MAIN_PAGE = "http://allrecipes.com/recipes/80/main-dish/?page=";
     private static final String RECIPE_PAGE = "http://allrecipes.com/recipe/";
-    private static final String NUTRIENT_KEY = "nutrientLine__item--amount";
-    private static final String INGREDIENT_KEY = "recipe-ingred_txt";
-    private static final String RATINGS_KEY = "recipe-summary__stars";
-    private static final String IMAGE_KEY = "";
+
 
     public static void main(String[] args) {
         List<IStatusListener> listeners = new ArrayList<>();
@@ -42,12 +39,7 @@ public class scrape {
 
                 for (Element recipeElem : recipeElems) {
                     String id = recipeElem.attr("data-id");
-                    AllRecipePageReader reader = new AllRecipePageReader(RECIPE_PAGE + id,
-                            listeners,
-                            NUTRIENT_KEY,
-                            INGREDIENT_KEY,
-                            RATINGS_KEY,
-                            IMAGE_KEY);
+                    AllRecipePageReader reader = new AllRecipePageReader(RECIPE_PAGE + id, listeners);
 
                     recipeQueue.add(reader);
                 }

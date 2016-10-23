@@ -32,6 +32,7 @@ public class PageRunner implements IPageRunner {
         }
     }
 
+    @Override
     public void shutdown(LinkedBlockingQueue<PageReader> queue) {
         queue.add(POISON_PILL);
         masterThread.shutdown();

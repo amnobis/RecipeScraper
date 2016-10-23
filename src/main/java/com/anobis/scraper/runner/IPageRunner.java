@@ -7,4 +7,6 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public interface IPageRunner {
     void start(LinkedBlockingQueue<PageReader> queue);
+
+    void shutdown(LinkedBlockingQueue<PageReader> queue);
 }
