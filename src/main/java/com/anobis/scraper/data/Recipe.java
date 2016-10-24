@@ -46,6 +46,7 @@ public class Recipe {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
+                .add("name", name)
                 .add("ingredients", ingredients)
                 .add("nutrition", nutrition)
                 .add("image", image)

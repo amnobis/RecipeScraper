@@ -8,6 +8,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.function.Function;
@@ -20,11 +22,11 @@ import com.anobis.scraper.data.Recipe.Grade;
  * @author anobis
  */
 public class AllRecipePageReader implements PageReader {
-    private static final String NAME_KEY = "";
+    private static final String NAME_KEY = "recipe-summary__h1";
     private static final String NUTRIENT_KEY = "nutrientLine__item--amount";
     private static final String INGREDIENT_KEY = "recipe-ingred_txt";
     private static final String RATINGS_KEY = "recipe-summary__stars";
-    private static final String IMAGE_KEY = "";
+    private static final String IMAGE_KEY = "photo-with-video";
 
     private final String url;
     private final List<IStatusListener> statusListeners;
@@ -50,8 +52,6 @@ public class AllRecipePageReader implements PageReader {
             List<String> ingredients = getIngredients(doc, INGREDIENT_KEY);
             ByteBuffer image = getImage(doc, IMAGE_KEY);
 
-            System.out.println("Recipe was found!");
-
             statusListeners.forEach(listener -> {
                 listener.recipeFound(new Recipe(name, nutrition, ingredients, grade, image));
             });
@@ -64,10 +64,30 @@ public class AllRecipePageReader implements PageReader {
     }
 
     private static String getName(Document doc, String nameKey) {
-        return "";
+        return doc.getElementsByClass(nameKey).first().text();
     }
 
     private static ByteBuffer getImage(Document doc, String imageKey) {
+        Element imageElem = doc.getElementsByClass(imageKey).first();
+
+        for (Element elem : imageElem.getElementsByAttribute("itemprop")) {
+            if (elem.attr("itemprop").equals("image")) {
+                try {
+                    URL imageUrl = new URL(elem.text());
+
+                } catch (MalformedURLException e) {
+
+                }
+            }
+        }
+
+
+        imageElem.getElementsByAttribute("itemprop").forEach(elems -> {
+
+        });
+
+
+
         return ByteBuffer.wrap(new byte[]{0});
     }
 
@@ -84,7 +104,7 @@ public class AllRecipePageReader implements PageReader {
     }
 
     private static Grade getGrade(Document doc, String ratingsKey) {
-        Elements ratingsElems = doc.getElementsByClass("recipe-summary__stars").first().getElementsByTag("meta");
+        Elements ratingsElems = doc.getElementsByClass(ratingsKey).first().getElementsByTag("meta");
 
         double rating = 0;
         int numReviews = 0;

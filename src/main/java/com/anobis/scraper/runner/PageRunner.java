@@ -14,10 +14,14 @@ public class PageRunner implements IPageRunner {
 
         @Override
         public void run() {
-
         }
     };
+    private final LinkedBlockingQueue<PageReader> queue;
     private MasterThread masterThread;
+
+    public PageRunner(LinkedBlockingQueue<PageReader> queue) {
+        this.queue = queue;
+    }
 
     @Override
     public void start(LinkedBlockingQueue<PageReader> queue) {
@@ -33,7 +37,7 @@ public class PageRunner implements IPageRunner {
     }
 
     @Override
-    public void shutdown(LinkedBlockingQueue<PageReader> queue) {
+    public void shutdown() {
         queue.add(POISON_PILL);
         masterThread.shutdown();
         try {
@@ -65,7 +69,6 @@ public class PageRunner implements IPageRunner {
                         break;
                     }
                     executor.execute(reader);
-                    System.out.println("A new thread has been started for reader " + reader.getUrl());
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 } catch (Exception e) {

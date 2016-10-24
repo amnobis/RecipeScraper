@@ -29,10 +29,10 @@ public class Scrape {
         LinkedBlockingQueue<PageReader> recipeQueue = new LinkedBlockingQueue<>();
         RecipeListener recipeListener = new RecipeListener(recipeQueue);
         listeners.add(recipeListener);
-        PageRunner runner = new PageRunner();
+        PageRunner runner = new PageRunner(recipeQueue);
         runner.start(recipeQueue);
 
-        for (int i = 1; i < 10; ++i) {
+        for (int i = 1; i < 5; ++i) {
             try {
                 Document doc = Jsoup.connect(MAIN_PAGE + i).get();
                 Elements recipeElems = doc.body().getElementsByClass("favorite");
@@ -47,7 +47,7 @@ public class Scrape {
                 System.out.println("Unable to connect to URL " + MAIN_PAGE + i);
             }
         }
-        runner.shutdown(recipeQueue);
+        runner.shutdown();
         try {
             sleep(2000);
         } catch (Exception e) {
